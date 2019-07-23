@@ -8,6 +8,7 @@ let
   haskellOverlay = hself: hsuper:
   {
     my-random-fu-multivariate = hself.callPackage ./pkgs/random-fu-multivariate { };
+    my-cmaes = self.haskell.lib.dontCheck (hself.callPackage ./pkgs/cmaes { });
 };
 in {
   python37Packages = super.python37Packages.override { overrides = pythonOverlay; };
