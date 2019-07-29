@@ -1,5 +1,6 @@
 { cmake, fetchurl, python, stdenv,
-  openblas, liblapack,
+  darwin,
+  blas, liblapack,
   gfortran }:
 
 stdenv.mkDerivation rec {
@@ -12,15 +13,15 @@ stdenv.mkDerivation rec {
     sha256 = "0238r1qnwqz13wcjzfsbcfi8rfnlxcjjmxq2vpf2qf5jgablvna7";
   };
 
-
   cmakeFlags = [
     "-DEXAMPLES_INSTALL_PATH=${placeholder "out"}/share/examples"
     "-DSUNDIALS_INDEX_TYPE=int32_t"
-    "-DLAPACK_ENABLE=ON"
-    "-DLAPACK_LIBRARIES=[${liblapack}/lib/liblapack.dylib,${openblas}/lib/libopenblas.dylib,${gfortran.cc.lib}/lib/libgfortran.a]"
-  ];
+    "-DLAPACK_ENABLE=ON" ];
 
-  nativeBuildInputs = [ cmake gfortran.cc.lib openblas liblapack];
+  nativeBuildInputs = [ cmake
+    darwin.apple_sdk.frameworks.Accelerate
+    blas liblapack
+    gfortran.cc.lib ];
   buildInputs = [ python gfortran ];
 
   meta = with stdenv.lib; {
