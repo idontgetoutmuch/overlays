@@ -16,4 +16,5 @@ in {
 	    super.haskell.packages // { ghc864 =
 	      super.haskell.packages.ghc864.override { overrides = haskellOverlay; }; };
 	  };
+  haskellPackages = super.haskellPackages.override { overrides = haskellOverlay; };
 }
